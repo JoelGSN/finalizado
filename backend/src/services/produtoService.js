@@ -1,20 +1,22 @@
 import bd_produto from '../models/bd_produto.js'
 
+
+
 export async function listarproduto() {
     return await bd_produto.findAll({ order: [['id', 'ASC']] })
 
 }
 
-export async function buscarcPornome(nome/*nmproduto*/) {
+export async function buscarcPornome(nome_produto/*nmproduto*/) {
     return await bd_produto.findOne({
-        where: { nome }
+        where: { nome_produto }
     })
 
 }
 
 export async function cadastrarproduto(dados) {
-    const { nome, tipo, cor, quantidade, preco } = dados
-    return await bd_produto.create({ nome, tipo, cor, quantidade, preco })
+    const { nome_produto, tipo, cor, quantidade, preco } = dados
+    return await bd_produto.create({ nome_produto, tipo, cor, quantidade, preco })
 
 }
 
@@ -30,11 +32,11 @@ export async function removerproduto(nmproduto) {
 }
 
 export async function atualizarproduto(nmproduto, dados) {
-    const { nome, tipo, cor, quantidade, preco } = dados
+    const { nome_produto, tipo, cor, quantidade, preco } = dados
 
     const produtoec = await buscarcPornome(nmproduto)
     if (produtoec) {
-        produtoec.update({ nome, tipo, cor, quantidade, preco })
+        produtoec.update({ nome_produto, tipo, cor, quantidade, preco })
         return produtoec
     }
 

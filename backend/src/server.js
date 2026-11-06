@@ -1,27 +1,33 @@
 import express from 'express'
 import cliente_routes from './routes/cliente_routes.js'
 import produto_routes from './routes/produto_routes.js'
+import venda_routes from './routes/venda_routes.js'
 import sequelize from './config/database.js'
 import './models/bd_cliente.js'
 import './models/bd_produto.js'
+import './models/bd_venda.js'
+import cors from 'cors'
+
 
 const app = express()
 
-// Habilita CORS para requisições do frontend
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200)
-  }
-  next()
-})
 
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*')
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
+//   if (req.method === 'OPTIONS') {
+//     return res.sendStatus(200)
+//   }
+//   next()
+// })
+
+app.use(cors())
 app.use(express.json())
 
 app.use('/cliente', cliente_routes)
 app.use('/produto', produto_routes)
+app.use('/venda', venda_routes)
 
 try {
   await sequelize.authenticate()

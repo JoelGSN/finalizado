@@ -31,6 +31,7 @@ const quantidadev = document.getElementById("quantidadecv")
 
 buscar_cliente()
 buscar_produto()
+buscar_venda();
 
 //ABA DE RELATÓRIOS INICIO
 //PARTE DOS BOTÕES INICIO
@@ -68,7 +69,7 @@ function relatorio() {
             function listarpdi() {
                 dadosrl.innerHTML = 'Relatório de Cadastro de Produtos'
                 for (let produto of produtos) {
-                    dadosrl.innerHTML += `<p><br>${i++}º => Nome do Produto: ${produto.produto}   ||   Quantidade: ${produto.quantidade}  || Valor Produto: ${produto.preco} || Total em Estoque: R$${(produto.quantidade * produto.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>`
+                    dadosrl.innerHTML += `<p><br>${i++}º => Nome do Produto: ${produto.nome_produto}   ||   Quantidade: ${produto.quantidade}  || Valor Produto: ${produto.preco} || Total em Estoque: R$${(produto.quantidade * produto.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>`
                 }
             }
             listarpdi()
@@ -77,9 +78,13 @@ function relatorio() {
                 let i = 1
                 function listarvd() {
                     dadosrl.innerHTML = 'Relatório de Vendas'
-                    for (let venda of vendas) {
-                        dadosrl.innerHTML += `<p><br>${i++}º => Nome do Produto: ${venda.nome}   ||   Quantidade: ${venda.quantidade}</p>`
+                    
+                    for (let venda of busca) {
+                        console.log(venda)
+                        // dadosrl.innerHTML += `<p><br>${i++}º => Nome do Produto: ${venda.nome}   ||   Quantidade: ${venda.quantidade}</p>`
+                        dadosrl.innerHTML += `<p><br>${i++}º => Nome do Produto: ${busca.nome_produto}   ||   Quantidade: ${busca.quantidadev}</p>`
                     }
+
                 }
                 listarvd()
             } else {
@@ -144,12 +149,12 @@ async function pro() {
             if (quantidade.value >= 0) {
                 let existe = false
                 for (let p of produtos) {
-                    if (p.nome == nomep.value)
+                    if (p.nome_produto == nomep.value)
                         existe = true
                 }
                 if (!existe) {
                     const produto = {
-                        nome: nomep.value,
+                        nome_produto: nomep.value,
                         tipo: tipo.value,
                         cor: cor.value,
                         preco: preco.value,
@@ -171,22 +176,7 @@ async function pro() {
     } else alert("Preencha todos os campos do produto")
     // listar()
 }
-// function listarpd() {
-//     dadospd.innerHTML = '<== Cadastrados ==>'
-//     for (let produto of produtos) {
-//         dadospd.innerHTML += `<p>Produto: ${produto.nome} || Quantidade: ${produto.quantidade}</p>`
-//     }
-// }
-//ABA DE PRODUTOS FIM
-//FUNÇÕES GERAIS INICIO
-// function listar() {
-//     if (uf) {
-//         listarcl()
-//     } else {
-//         listarpd()
-//     }
-// }
-// listar();
+
 //Movimentação Clientes inicio
 function buscliente() {
     let existe = false
@@ -242,7 +232,7 @@ function comprapd() {
     let qtd_novo = 0
     if (vlrsoma > 0) {
         for (let produto of produtos) {
-            if (produto.nome === nmcv.value) {
+            if (produto.nome_produto === nmcv.value) {
                 existe = true
                 produto.quantidade = Number(produto.quantidade) + vlrsoma
                 qtd_novo = produto.quantidade
@@ -262,15 +252,12 @@ function comprapd() {
 }
 function venderpd() {
 
-
-
-
     let existe = false;
     let vlrsoma = Number(qtdcv.value)
     let qtd_novo = 0;
     if (vlrsoma > 0) {
         for (let produto of produtos) {
-            if (produto.nome === nmcv.value) {
+            if (produto.nome_produto === nmcv.value) {
                 existe = true;
                 if (produto.quantidade > vlrsoma) {
 
@@ -313,56 +300,7 @@ function venderpd() {
 //FUNÇÕES GERAIS FIM
 
 
-function xyz() {
-    let existe = false;
-    let vlrsoma = Number(qtdcv.value)
-    let qtd_novo = 0;
 
-    if (nmcv.value == "" || qtdcv.value == "") {
-        alert("Preencher devidamente os campos!!")
-        return
-    }
-    if (vlrsoma > 0) {
-
-
-
-
-
-
-        for (let produto of produtos) {
-            if (produto.nome === nmcv.value) {
-                existe = true;
-                if (produto.quantidade > vlrsoma) {
-
-                    produto.quantidade = Number(produto.quantidade) - vlrsoma
-                    qtd_novo = produto.quantidade;
-                    break;
-                } else {
-                    alert("Quantidade Indisponível para venda")
-                }
-            }
-        }
-        if (existe) {
-            // if (produto.quantidade > vlrsoma) {
-            const venda = {
-                nome: nomev.value,
-                quantidade: quantidadev.value
-            }
-            vendas.push(venda)
-            localStorage.setItem("vendas", JSON.stringify(vendas))
-            localStorage.setItem("produtos", JSON.stringify(produtos));
-            // alert("Alterado de "+qtd_antiga+" para "+ idpd.value+" ou "+produto.quantidade);
-            alert("Venda Executada!! Novo Estoque: " + qtd_novo);
-            // } else {
-            //     alert("Quantidade Indisponível para venda")
-            // }
-        } else {
-            alert("Produto não encontrado!");
-        }
-    } else {
-        alert("Impossível Vender Valor negativo!")
-    }
-}
 
 async function buscar_cliente() {
     const busca = await fetch('http://localhost:3000/cliente')
@@ -371,15 +309,17 @@ async function buscar_cliente() {
     clientes.push(...dados)
 }
 
-
-async function buscar_produto() {
-    const busca = await fetch('http://localhost:3000/produto')
+async function buscar_venda() {
+    const busca = await fetch('http://localhost:3000/venda')
     const dados = await busca.json()
-    produtos.lenght = 0
-    produtos.push(...dados)
+    vendas.length = 0
+    vendas.push(...dados)
 }
 
-async function encontrar_cliente(){
+
+
+
+async function encontrar_cliente() {
     // buscar_cliente()
     const c = await clientes.find(item => item.cpfoucnpj === cpf.value)
     console.log(c)
@@ -403,12 +343,13 @@ async function editar_cliente() {
         }
         let resposta = await fetch(`http://localhost:3000/cliente/${c.cpfoucnpj}`, {
             method: "PUT",
-            headers: {"Content-Type":"application/json"},
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(cliente_atualizado)
-            })
+        })
     }
 
 }
+
 async function deletar_cliente() {
 
     const c = await clientes.find(item => item.cpfoucnpj === cpf.value)
@@ -417,13 +358,70 @@ async function deletar_cliente() {
     // let x = item.nome
     // console.log(item.nome)
     if (c) {
-        
+
         let resposta = await fetch(`http://localhost:3000/cliente/${c.cpfoucnpj}`, {
             method: "DELETE"
-            
-            })
-            // alert("deletei "+x)
+
+        })
+        // alert("deletei "+x)
     }
 
 }
+
+
+async function buscar_produto() {
+    const busca = await fetch('http://localhost:3000/produto')
+    const dados = await busca.json()
+    produtos.length = 0
+    produtos.push(...dados)
+}
+
+async function comp_produto() {
+    let vlrsoma = Number(qtdcv.value)
+    const pd = await produtos.find(prod => (prod.nome_produto === nmcv.value))
+    if (pd) {
+        let produto_compra = {
+            nome_produto: pd.nome_produto,
+            tipo: pd.tipo,
+            cor: pd.cor,
+            preco: pd.preco,
+            quantidade: Number(pd.quantidade) + vlrsoma
+        }
+        let resposta = await fetch(`http://localhost:3000/produto/${pd.nome_produto}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(produto_compra)
+        })
+        alert("Compra do produto {[ " + produto_compra.nome_produto + " ]} realizada com Sucesso! ")
+    }
+}
+
+async function vend_produto() {
+    const pd = await produtos.find(prod => (prod.nome_produto === nmcv.value))
+    if (pd) {
+        let produto_venda = {
+            nome_produto: pd.nome_produto,
+            tipo: pd.tipo,
+            cor: pd.cor,
+            preco: pd.preco,
+            quantidade: Number(pd.quantidade) - Number(qtdcv.value)
+        }
+        let resposta = await fetch(`http://localhost:3000/produto/${pd.nome_produto}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(produto_venda)
+        })
+        alert("Venda do produto {[ " + produto_venda.nome_produto + " ]} realizada com Sucesso! ")
+
+        await fetch('http://localhost:3000/venda', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(produto_venda)
+        })
+
+    }
+}
+vend_produto()
+
+
 

@@ -7,7 +7,7 @@ const cad_produto = sequelize.define('produto', {
         primaryKey: true,
         autoIncrement: true
     },
-    produto: {
+    nome_produto: {
         type: DataTypes.STRING,
         allowNull: false
     },
