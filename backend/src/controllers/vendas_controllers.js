@@ -17,10 +17,10 @@ const venda = await vendasService.buscarcPornome(req.params.venda)
     return res.status(200).json(produto)
 }
 
-// export async function cadastrar (req,res)  {
-//     const venda = await vendasService.cadastrarvenda(req.body)
-//     return res.status(201).json(produto)
-// }
+export async function cadastrar (req,res)  {
+    const venda = await vendasService.cadastrarvenda(req.body)
+    return res.status(201).json(venda)
+}
 
 // export async function remover(req, res) {
 //     const venda = await produtoService.removervenda(req.params.produto)

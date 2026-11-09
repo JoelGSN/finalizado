@@ -1,16 +1,12 @@
-:root {
+/* :root {
     --cor_let_form: blue;
-    /* cor das letras dos forms*/
     --cor_let_barra: #fff;
-    /* cor das letras da barra de menu*/
     --bg_barra: #1a1a2e;
     --bg_divs: #d4e4f7;
-    /*cor background menu*/
     --bg_campos: #f8e4c6;
     --input_bg: #000000;
     --border-style-solid: solid;
     --border_col: black;
-    /* --border-color-primary: #050000; */
     --cor_da_borda: #000000;
 
 }
@@ -37,9 +33,6 @@
 }
 
 
-/* .menu-vertical{
-    list-style: none;
-} */
 
 .menu-vertical li {
     margin-bottom: 10px;
@@ -134,7 +127,6 @@ main {
 
 
 
-/*clientes inicio*/
 
 #cdclientes {
     color: blue;
@@ -144,11 +136,8 @@ main {
     text-align: center;
     list-style: none;
     background-color: var(--bg_divs);
-    /* border: var(--border-style-solid); */
     border: 4px solid black;
-    /* border-color: black; */
     border-width: 4px;
-    /* width: 100%; */
 
 
 
@@ -187,45 +176,36 @@ main {
     color: black;
 
 
-}
-
-/*clientes fim*/
+}*/
 
 
-
-/*produtos inicio*/
-
-
-#form_cadp {
-    color: blue;
-    margin-top: 10px;
-    text-align: center;
-    list-style: none;
-    background-color: var(--bg_divs);
-    border: 4px solid black;
-    font-size: 1.5rem;
+#cdclientes {
+    /* color: blue;
     font-weight: bolder;
+    font-size: 1.5rem; */
+    /* margin-top: 10px; */
+    /* text-align: center; */
+    /* list-style: none; */
+    /* background-color: var(--bg_divs); */
+    /* border: 4px solid black; */
+    /* border-width: 4px; */
 
 
 
 
-
+    #mid {
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 
 
-#compravenda {
-    color: blue;
-    margin-top: 10px;
-    text-align: center;
-    list-style: none;
-    background-color: var(--bg_divs);
-    border: 4px solid black;
 
 
-}
 
-#div_relatorio {
+
+/* #div_relatorio {
     background-color: var(--bg_divs);
     border: var(--border-style-solid);
     text-align: center;
@@ -235,15 +215,441 @@ main {
     width: 100%;
     border: 4px solid black;
 
-}
+}  */
 
 #txt_rel {
     font-size: 2rem;
-    color: red;
+    color: white;
 }
 
 #listar {
     text-align: center;
+}
+
+:root {
+    /* --cor_let_form: white; */
+    --cor_let_form: #94a3b8;
+    --font_let_form: 5.5rem;
+    --cor_let_barra: #fff;
+    --bg_barra: #1a1a2e;
+    --bg_divs: #24344d;
+    --bg_campos: #f8e4c6;
+    --input_bg: #000000;
+    --border-style-solid: solid;
+    --border_col: black;
+    --cor_da_borda: #000000;
+    --hide: display: none;
+}
+
+* {
+    
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.layout-site {
+    display: flex;
+    min-height: 100vh;
+    min-width: 100%;
+}
+
+/* Barra lateral padrão */
+.barra-lateral {
+    width: 20vw;
+    max-width: 300px;
+    background-color:var(--bg_divs);
+    color: var(--cor_let_barra);
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-vertical li {
+    margin-bottom: 12px;
+    list-style: none;
+}
+
+.menu-vertical a {
+    display: block;
+    color: #b3b3b3;
+    text-decoration: none;
+    padding: 14px 18px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.menu-vertical a:hover {
+    background-color: #0f3460;
+    color: #fff;
+    padding-left: 22px;
+}
+
+.menu-vertical a.ativo {
+    font-size: larger;
+    background-color: #3495f7;
+    color: #fff;
+    padding-left: 22px;
+}
+
+h1,
+h2 {
+    text-align: center;
+    margin: 20px 0;
+    color:white;
+    border:2px solid white;
+    border-radius: 8px;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+    background-color: #0f172a;
+    text-align: center;
+}
+
+/* Logo da Página Inicial */
+#logo {
+    height: auto;
+    border-radius: 8px;
+    margin-top: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estrutura dos formulários e relatórios */
 
 
+
+.css_form_container {
+    margin: 2px auto;
+    padding: 2px;
+    color: var(--cor_let_form);
+    margin-top: 10px;
+    text-align: center;
+    list-style: none;
+    background-color: var(--bg_divs);
+    border: 4px solid white;
+    font-size: 1.0rem;
+    font-weight: bolder;
+    border-radius: 8px;
+    min-height: 10vh;
+
+    #mid {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+
+
+
+
+
+#div_relatorio {
+    margin: 20px auto;
+    display: block;
+    width: 99%;
+    max-width: 100%;
+    text-align: center;
+    list-style: none;
+    background-color: var(--bg_divs);
+    border: 4px solid white;
+    /* border: 4px solid var(--border_col); */
+    padding: 25px;
+    border-radius: 8px;
+    color: var(--cor_let_form);
+    font-weight: bolder;
+    font-size: 1.5rem;
+    height: auto;
+    min-height: 10vh;
+
+
+}
+
+/* #div_relatorio #listar {
+    background-color: rgb(255, 247, 222);
+    width: 95%;
+    margin: 15px auto;
+    padding: 15px;
+    color: rgb(0, 0, 0);
+    font-size: 1.2rem;
+    border: 3px solid black;
+    border-radius: 6px;
+} */
+
+ #listar {
+    background-color: rgb(255, 247, 222);
+    width: 100%;
+    margin: 15px auto;
+    padding: 15px;
+    color: rgb(0, 0, 0);
+    font-size: 1.2rem;
+    border: 3px solid white;
+    border-radius: 6px;
+}
+
+
+
+/* Container de botões gerais */
+.btncontainer,
+#btncadcliente {
+    display: flex;
+    gap: 15px;
+    margin-top: 0.3px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* #mid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border: none;
+    background: none;
+} */
+
+.botaogeral,
+.botaorelat {
+    padding: 12px 20px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: #f59e0b;
+    color: black;
+    cursor: pointer;
+    font-weight: bolder;
+    /* column-gap: 2px; */
+    margin-bottom: 10px;
+    transition: background-color 0.3s;
+}
+
+
+
+
+
+.botaogeral:hover,
+.botaorelat:hover {
+    background-color: #7c1010;
+    color: white;
+}
+
+/* .inputcadcl {
+    margin-top: 6px;
+    margin-bottom: 10px;
+    width: 60%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+} */
+
+.css_input_txt {
+    margin-top: 6px;
+    margin-bottom: 10px;
+    width: 90%;
+    padding: 12px;
+    font-size: 1.2rem;
+    /* border: 2px solid #ccc; */
+    border-radius: 4px;
+    background-color: #0f172a;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    height: 2vh;
+}
+
+
+
+
+
+/* .inputcadcl:hover {
+    background-color: #80a0f3;
+}
+
+.inputcadcl:focus {
+    background-color: #7f94f5;
+    color: black;
+    outline: none;
+} */
+
+.css_input_txt:hover {
+    background-color: #80a0f3;
+}
+
+.css_input_txt:focus {
+    background-color: #7f94f5;
+    color: black;
+    outline: none;
+}
+
+
+
+.nome_inputs {
+    color: var(--cor_let_form);
+    background-color: black;
+    font-size: 1.5rem;
+    font-weight: bolder;
+}
+
+#js_filtro {
+    display: inline-block;
+    font-size: 1rem;
+    padding: 10px;
+    width: 60%;
+    margin-top: 15px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    align-content: center;
+    text-align: center;
+    display: none;
+    
+
+}
+
+
+/* ========================================================
+   1. DISPOSITIVOS MÓVEIS (Telas até 780px)
+   ======================================================== */
+@media (max-width: 1060px) {
+    .layout-site {
+        flex-direction: column;
+    }
+
+    .barra-lateral {
+        width: 100%;
+        max-width: none;
+        padding: 15px;
+    }
+
+    .menu-vertical ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+    }
+
+    .menu-vertical a {
+        padding: 8px 10px;
+        font-size: 0.85rem;
+    }
+
+    h1,
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    #logo {
+        max-width: 80%;
+    }
+
+    /* .inputcadcl, */
+    #js_filtro {
+        width: 90%;
+        display: none;
+    }
+
+    .btncontainer,
+    #btncadcliente,
+    #mid {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+
+    .botaogeral,
+    .botaorelat {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    #div_relatorio,
+    #cdclientes,
+    #form_cadp,
+    #compravenda {
+        width: 95%;
+        padding: 15px 10px;
+    }
+}
+
+
+/* ========================================================
+   2. MONITORES MÉDIOS (De 1061px até 1600px)
+   ======================================================== */
+@media (min-width: 1061px) and (max-width: 1600px) {
+    .barra-lateral {
+        width: 25vw;
+    }
+
+    /* .inputcadcl, */
+    #js_filtro {
+        width: 45vw;
+        max-width: 400px;
+        display: none;
+    }
+
+    /* #div_relatorio,
+    #cdclientes,
+    #form_cadp,
+    #compravenda {
+        width: 95%;
+        max-width: 100vw;
+    } */
+
+    #logo {
+        max-width: 80%;
+    }
+}
+
+
+/* ========================================================
+   3. MONITORES GRANDES (Maiores que 1600px, Ex: 1920x1080)
+   ======================================================== */
+@media (min-width: 1601px) {
+    .layout-site {
+        max-width: 1920px;
+        margin: 0 auto;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .barra-lateral {
+        width: 18vw;
+    }
+
+    /* .inputcadcl, */
+    #js_filtro {
+        width: 25vw;
+        max-width: 450px;
+        display: none;
+        background-color: red;
+    }
+
+    /* #div_relatorio,
+    #cdclientes,
+    #form_cadp,
+    #compravenda {
+        width: 99%;
+        max-width: 110vw;
+        padding: 5px;
+        height: 70vh;
+    } */
+
+    main {
+        padding: 40px;
+    }
+
+    h1,
+    h2 {
+        font-size: 2rem;
+    }
+
+    #logo {
+        max-width: 35%;
+    }
 }

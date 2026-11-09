@@ -19,7 +19,7 @@ const cad_venda = sequelize.define('venda', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    quantidade: {
+    quantidade_vendida: {
         type: DataTypes.INTEGER,
         allowNull: false
     },

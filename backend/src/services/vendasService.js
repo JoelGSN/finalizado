@@ -14,11 +14,17 @@ export async function buscarcPornome(nome_produto/*nmproduto*/) {
 
 }
 
-// export async function cadastrarvenda(dados) {
-//     const { nome_produto, tipo, cor, quantidade, preco } = dados
-//     return await bd_produto.create({ nome_produto, tipo, cor, quantidade, preco })
+export async function cadastrarvenda(dados) {
+    const { nome_produto, tipo, cor, quantidade_vendida, preco } = dados
+    return await bd_venda.create({ 
+         nome_produto,
+         tipo,
+         cor,
+         quantidade_vendida,
+         preco 
+        })
 
-// }
+}
 
 // export async function removervenda(nmproduto) {
 //     const produtoec = await buscarcPornome(nmproduto)

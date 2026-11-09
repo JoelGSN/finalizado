@@ -5,12 +5,12 @@ const router = Router()
 
 router.get('/', vendas_controllers.listar )
 
-router.get('/:vendas', vendas_controllers.buscarcPornome )
+router.get('/:venda', vendas_controllers.buscarcPornome )
 
-// router.post('/', vendas_controllers.cadastrar)
+router.post('/', vendas_controllers.cadastrar)
 
-// router.delete('/:vendas', vendas_controllers.remover)
+// router.delete('/:venda', vendas_controllers.remover)
 
-// router.put('/:vendas', vendas_controllers.atualizar)
+// router.put('/:venda', vendas_controllers.atualizar)
 
 export default router

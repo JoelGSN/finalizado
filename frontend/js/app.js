@@ -1,17 +1,17 @@
-const nomec = document.getElementById("nomec")
-const cpf = document.getElementById("cpf")
-const rua = document.getElementById("rua")
-const numero = document.getElementById("numero")
-const uf = document.getElementById("uf")
+const nomec = document.getElementById("js_nomec")
+const cpf = document.getElementById("js_cpf")
+const rua = document.getElementById("js_rua")
+const numero = document.getElementById("js_numero")
+const uf = document.getElementById("js_uf")
 const clientes = JSON.parse(localStorage.getItem("clientes")) || []
 const dadoscl = document.getElementById("lista-cliente")
 //\\
 //\\
-const nomep = document.getElementById("nomep")
-const tipo = document.getElementById("tipo")
-const cor = document.getElementById("cor")
-const preco = document.getElementById("preco")
-const quantidade = document.getElementById("quantidade")
+const nomep = document.getElementById("js_nomep")
+const tipo = document.getElementById("js_tipo")
+const cor = document.getElementById("js_cor")
+const preco = document.getElementById("js_preco")
+const quantidade = document.getElementById("js_quantidade")
 const produtos = JSON.parse(localStorage.getItem("produtos")) || []
 const dadospd = document.getElementById("lista-produto")
 //\\
@@ -20,7 +20,7 @@ const nmcv = document.getElementById("nomecv")
 const qtdcv = document.getElementById("quantidadecv")
 //\\
 //\\
-const campo = document.getElementById('filtro');
+const campo = document.getElementById('js_filtro');
 const dadosrl = document.getElementById("listar")
 const dadosts = document.getElementById("teste")
 //\\
@@ -59,32 +59,41 @@ function relatorio() {
         function listarcli() {
             dadosrl.innerHTML = 'Relatório de Cadastro de Clientes'
             for (let cliente of clientes) {
-                dadosrl.innerHTML += `<p><br>${i++}º => Nome do Cliente: ${cliente.nome}   ||   CPF: ${cliente.cpfoucnpj}</p>`
+                dadosrl.innerHTML += `<p><br>${i++}º <span style="color: red;"> => <span style="color: black;"> Nome do Cliente: ${cliente.nome}   ||   CPF: ${cliente.cpfoucnpj}<span style="color: red;"> <= <span style="color: black;"></p>`
             }
         }
         listarcli()
     } else {
         if (campo.value === "cadp") {
             let i = 1
+            let total_estoque = 0
             function listarpdi() {
                 dadosrl.innerHTML = 'Relatório de Cadastro de Produtos'
                 for (let produto of produtos) {
-                    dadosrl.innerHTML += `<p><br>${i++}º => Nome do Produto: ${produto.nome_produto}   ||   Quantidade: ${produto.quantidade}  || Valor Produto: ${produto.preco} || Total em Estoque: R$${(produto.quantidade * produto.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>`
+                    let totale = produto.preco * produto.quantidade
+                    total_estoque += totale
+                    dadosrl.innerHTML += `<p><br>${i++}º <span style="color: red;"> => <span style="color: black;"> Nome do Produto: ${produto.nome_produto}   ||   Quantidade: ${produto.quantidade}  || Valor Produto: ${produto.preco} || Total em Estoque: R$${(produto.quantidade * produto.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}<span style="color: red;"> <= <span style="color: black;"></p>`
                 }
+                dadosrl.innerHTML += `<br><hr><p><strong> <span style="color: blue;"> => <span style="color: black;">Valor Total Do Estoque: R$ ${total_estoque.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <span style="color: Blue;"> <= <span style="color: black;"> </strong></p>`;
+
             }
             listarpdi()
         } else {
             if (campo.value === "venda") {
                 let i = 1
+                let somatorio = 0;
+                let somaestoque = 0
                 function listarvd() {
                     dadosrl.innerHTML = 'Relatório de Vendas'
-                    
-                    for (let venda of busca) {
-                        console.log(venda)
-                        // dadosrl.innerHTML += `<p><br>${i++}º => Nome do Produto: ${venda.nome}   ||   Quantidade: ${venda.quantidade}</p>`
-                        dadosrl.innerHTML += `<p><br>${i++}º => Nome do Produto: ${busca.nome_produto}   ||   Quantidade: ${busca.quantidadev}</p>`
+                    for (let venda of vendas) {
+                        let total = venda.quantidade_vendida * venda.preco;
+                        let totalqtd = venda.quantidade_vendida;
+                        somatorio += total;
+                        somaestoque += totalqtd
+                        dadosrl.innerHTML += `<p><br>${i++}º <span style="color: red;"> => <span style="color: black;"> Nome do Produto: ${venda.nome_produto}  ||  Quantidade: ${venda.quantidade_vendida}  ||  Preço: ${venda.preco} || Total Vendido: R$ ${venda.quantidade_vendida * venda.preco} <span style="color: red;"> <= <span style="color: black;"> </p>`
                     }
-
+                    dadosrl.innerHTML += `<br><hr><p><strong> <span style="color: blue;"> => <span style="color: black;">Valor Total Geral de Vendas: R$ ${somatorio.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} <span style="color: Blue;"> <= <span style="color: black;"> </strong></p>`;
+                    dadosrl.innerHTML += `<br><hr><p><strong> <span style="color: blue;"> => <span style="color: black;">Quantidade Total Vendida: ${somaestoque} <span style="color: Blue;"> <= <span style="color: black;"> </strong></p>`;
                 }
                 listarvd()
             } else {
@@ -353,17 +362,14 @@ async function editar_cliente() {
 async function deletar_cliente() {
 
     const c = await clientes.find(item => item.cpfoucnpj === cpf.value)
-    // const n = await clientes.find(item => item.cpfoucnpj === cpf.value)
 
-    // let x = item.nome
-    // console.log(item.nome)
     if (c) {
 
         let resposta = await fetch(`http://localhost:3000/cliente/${c.cpfoucnpj}`, {
             method: "DELETE"
 
         })
-        // alert("deletei "+x)
+        alert("O Cliente => " + c.nome + " <=foi deletado com sucesso")
     }
 
 }
@@ -378,48 +384,88 @@ async function buscar_produto() {
 
 async function comp_produto() {
     let vlrsoma = Number(qtdcv.value)
+
+    if (!nmcv.value || nmcv.value.trim() === "") {
+        return;
+    }
+
     const pd = await produtos.find(prod => (prod.nome_produto === nmcv.value))
-    if (pd) {
-        let produto_compra = {
-            nome_produto: pd.nome_produto,
-            tipo: pd.tipo,
-            cor: pd.cor,
-            preco: pd.preco,
-            quantidade: Number(pd.quantidade) + vlrsoma
-        }
-        let resposta = await fetch(`http://localhost:3000/produto/${pd.nome_produto}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(produto_compra)
-        })
+
+    if (!pd) {
+        alert("Produto não encontrado na lista local!");
+        return;
+
+    }
+    let produto_compra = {
+        nome_produto: pd.nome_produto,
+        tipo: pd.tipo,
+        cor: pd.cor,
+        preco: pd.preco,
+        quantidade: Number(pd.quantidade) + vlrsoma
+    }
+    let resposta = await fetch(`http://localhost:3000/produto/${pd.nome_produto}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(produto_compra)
+    })
+    if (resposta.ok) {
         alert("Compra do produto {[ " + produto_compra.nome_produto + " ]} realizada com Sucesso! ")
+        pd.quantidade = produto_compra.quantidade;
     }
 }
 
+
+
 async function vend_produto() {
-    const pd = await produtos.find(prod => (prod.nome_produto === nmcv.value))
-    if (pd) {
-        let produto_venda = {
-            nome_produto: pd.nome_produto,
-            tipo: pd.tipo,
-            cor: pd.cor,
-            preco: pd.preco,
-            quantidade: Number(pd.quantidade) - Number(qtdcv.value)
-        }
-        let resposta = await fetch(`http://localhost:3000/produto/${pd.nome_produto}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(produto_venda)
-        })
-        alert("Venda do produto {[ " + produto_venda.nome_produto + " ]} realizada com Sucesso! ")
 
-        await fetch('http://localhost:3000/venda', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(produto_venda)
-        })
+    let qtdvenda = Number(qtdcv.value)
 
+    if (!nmcv.value || nmcv.value.trim() === "") {
+        return;
     }
+
+    const pd = await produtos.find(prod => (prod.nome_produto === nmcv.value))
+
+    if (!pd && qtdvenda) {
+        alert("Produto não encontrado!");
+        return;
+    }
+
+    if (qtdvenda > Number(pd.quantidade)) {
+        alert("Quantidade superior ao estoque")
+        return
+    }
+    let produto_venda = {
+        nome_produto: pd.nome_produto,
+        tipo: pd.tipo,
+        cor: pd.cor,
+        preco: pd.preco,
+        quantidade: Number(pd.quantidade) - qtdvenda
+    }
+
+    let registro_venda = {
+        nome_produto: pd.nome_produto,
+        tipo: pd.tipo,
+        cor: pd.cor,
+        preco: pd.preco,
+        quantidade_vendida: qtdvenda
+    };
+
+    let resposta = await fetch(`http://localhost:3000/produto/${pd.nome_produto}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(produto_venda)
+    })
+    alert("Venda de => " + qtdvenda + " <= unidade(s) do produto => " + pd.nome_produto + " <= executada com sucesso, estoque final de => " + (pd.quantidade - qtdvenda))
+
+
+    let respostaVenda = await fetch('http://localhost:3000/venda', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(registro_venda)
+    });
+
+
 }
 vend_produto()
 
